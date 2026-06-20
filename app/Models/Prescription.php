@@ -40,6 +40,11 @@ class Prescription extends Model
         return $this->hasMany(PrescriptionItem::class);
     }
 
+    public function clinicalRecord()
+    {
+        return $this->belongsTo(ClinicalRecord::class);
+    }
+
     protected static function booted(): void
     {
         static::created(function ($prescription) {
