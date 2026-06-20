@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Pet extends Model
 {
@@ -47,5 +48,10 @@ class Pet extends Model
         }
 
         return Carbon::parse($this->birth_date)->age . ' años';
+    }
+
+    public function appointments(): HasMany
+    {
+        return $this->hasMany(Appointment::class);
     }
 }

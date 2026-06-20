@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Customer extends Model
 {
@@ -20,5 +21,9 @@ class Customer extends Model
     public function pets()
     {
         return $this->hasMany(Pet::class);
+    }
+    public function appointments(): HasMany
+    {
+        return $this->hasMany(Appointment::class);
     }
 }

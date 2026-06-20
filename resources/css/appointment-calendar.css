@@ -1,0 +1,50 @@
+#appointment-calendar {
+    --fc-page-bg-color: transparent;
+    --fc-neutral-bg-color: #f9fafb;
+    --fc-border-color: #e5e7eb;
+    --fc-today-bg-color: rgba(99, 102, 241, 0.08);
+    --fc-event-text-color: #ffffff;
+
+    --fc-button-bg-color: #6366f1;
+    --fc-button-border-color: #6366f1;
+    --fc-button-hover-bg-color: #4f46e5;
+    --fc-button-hover-border-color: #4f46e5;
+    --fc-button-active-bg-color: #4338ca;
+    --fc-button-active-border-color: #4338ca;
+}
+
+.dark #appointment-calendar {
+    --fc-neutral-bg-color: #111827;
+    --fc-border-color: #374151;
+    --fc-today-bg-color: rgba(129, 140, 248, 0.14);
+
+    --fc-button-bg-color: #818cf8;
+    --fc-button-border-color: #818cf8;
+    --fc-button-hover-bg-color: #6366f1;
+    --fc-button-hover-border-color: #6366f1;
+    --fc-button-active-bg-color: #4f46e5;
+    --fc-button-active-border-color: #4f46e5;
+}
+
+#appointment-calendar .fc {
+    color: #111827;
+}
+
+.dark #appointment-calendar .fc {
+    color: #f9fafb;
+}
+
+#appointment-calendar .fc-toolbar-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+#appointment-calendar .fc-button {
+    border-radius: 0.5rem;
+    box-shadow: none;
+}
+
+#appointment-calendar .fc-event {
+    border-radius: 0.5rem;
+    padding: 2px 4px;
+}
