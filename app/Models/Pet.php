@@ -6,5 +6,37 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pet extends Model
 {
-    //
+    protected $fillable = [
+        'customer_id',
+        'species_id',
+        'breed_id',
+        'name',
+        'sex',
+        'birth_date',
+        'weight',
+        'color',
+        'allergies',
+        'observations',
+        'status',
+    ];
+
+    protected $casts = [
+        'birth_date' => 'date',
+        'weight' => 'decimal:2',
+    ];
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function species()
+    {
+        return $this->belongsTo(Species::class);
+    }
+
+    public function breed()
+    {
+        return $this->belongsTo(Breed::class);
+    }
 }
