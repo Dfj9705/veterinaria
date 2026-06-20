@@ -4,11 +4,6 @@ use App\Http\Controllers\PrescriptionPdfController;
 use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/prescriptions/{prescription}/pdf', [PrescriptionPdfController::class, 'show'])
