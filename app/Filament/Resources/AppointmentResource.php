@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\AppointmentResource\Pages;
 use App\Filament\Resources\AppointmentResource\RelationManagers;
 use App\Models\Appointment;
+use App\Models\ClinicalRecord;
 use App\Models\Pet;
 use App\Models\Service;
 use App\Models\User;
@@ -88,7 +89,10 @@ class AppointmentResource extends Resource
                         Forms\Components\Select::make('veterinarian_id')
                             ->label('Veterinario')
                             ->options(function () {
-                                return User::role('Veterinario')
+                                return User::whereHas('roles', function ($query) {
+                                    $query->where('name', 'Veterinario')
+                                        ->orWhere('name', 'Administrador');
+                                })
                                     ->orderBy('name')
                                     ->pluck('name', 'id');
                             })
@@ -183,7 +187,9 @@ class AppointmentResource extends Resource
                     ->label('Duración')
                     ->suffix(' min')
                     ->sortable(),
-
+                Tables\Columns\IconColumn::make('clinicalRecord.id')
+                    ->label('Historial')
+                    ->boolean(),
                 Tables\Columns\TextColumn::make('status')
                     ->label('Estado')
                     ->badge()
@@ -241,6 +247,17 @@ class AppointmentResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make()->visible(fn($record) => $record->status !== 'Finalizada' && $record->status !== 'Cancelada' && $record->status !== 'No asistió'),
+                Tables\Actions\Action::make('start_attention')
+                    ->label('Iniciar atención')
+                    ->icon('heroicon-o-clipboard-document-check')
+                    ->color('success')
+                    ->visible(fn($record) => !ClinicalRecord::where('appointment_id', $record->id)->exists() && $record->status !== 'Cancelada' && $record->status !== 'No asistió')
+                    ->url(fn($record) => route('filament.admin.resources.clinical-records.create', [
+                        'appointment_id' => $record->id,
+                        'pet_id' => $record->pet_id,
+                        'veterinarian_id' => $record->veterinarian_id,
+                    ])),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

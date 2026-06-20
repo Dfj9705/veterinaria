@@ -140,6 +140,39 @@ class PetResource extends Resource
                             ->required(),
                     ])
                     ->columns(2),
+
+                Forms\Components\Section::make('Resumen clínico reciente')
+                    ->schema([
+                        Forms\Components\Placeholder::make('clinical_summary')
+                            ->label('')
+                            ->content(function ($record) {
+                                if (!$record) {
+                                    return 'Disponible al editar la mascota.';
+                                }
+
+                                $records = $record->clinicalRecords()
+                                    ->with('appointment.service')
+                                    ->latest('consultation_date')
+                                    ->take(5)
+                                    ->get();
+
+                                if ($records->isEmpty()) {
+                                    return 'Esta mascota aún no tiene historial clínico.';
+                                }
+
+                                return $records
+                                    ->map(function ($item) {
+                                        $date = $item->consultation_date?->format('d/m/Y H:i');
+                                        $service = $item->appointment?->service?->name ?? 'Atención médica';
+                                        $diagnosis = $item->diagnosis ?: 'Sin diagnóstico registrado';
+
+                                        return "{$date} | {$service} | {$diagnosis}";
+                                    })
+                                    ->implode("\n");
+                            }),
+                    ])
+                    ->collapsible()
+                    ->collapsed(),
             ]);
     }
 
@@ -226,7 +259,7 @@ class PetResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\ClinicalRecordsRelationManager::class,
         ];
     }
 
