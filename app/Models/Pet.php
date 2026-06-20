@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Pet extends Model
 {
@@ -38,5 +39,13 @@ class Pet extends Model
     public function breed()
     {
         return $this->belongsTo(Breed::class);
+    }
+    public function getAgeAttribute(): ?string
+    {
+        if (!$this->birth_date) {
+            return null;
+        }
+
+        return Carbon::parse($this->birth_date)->age . ' años';
     }
 }
