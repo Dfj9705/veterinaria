@@ -240,8 +240,8 @@
                             <td>
                                 @forelse ($prescription->items as $item)
                                     <div>
-                                        <strong>{{ $item->medicine }}</strong><br>
-                                        Dosis: {{ $item->dose }}<br>
+                                        <strong>{{ $item->medication }}</strong><br>
+                                        Dosis: {{ $item->dosage }}<br>
                                         Frecuencia: {{ $item->frequency }}<br>
                                         Duración: {{ $item->duration }}<br>
                                         Indicaciones: {{ $item->instructions ?: 'Sin indicaciones' }}
