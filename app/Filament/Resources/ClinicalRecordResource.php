@@ -218,6 +218,9 @@ class ClinicalRecordResource extends Resource
                     ->date('d/m/Y')
                     ->sortable()
                     ->placeholder('No definido'),
+                Tables\Columns\TextColumn::make('prescriptions_count')
+                    ->counts('prescriptions')
+                    ->label('Recetas'),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('pet_id')
@@ -256,6 +259,16 @@ class ClinicalRecordResource extends Resource
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\Action::make('prescription')
+                    ->label('Receta')
+                    ->icon('heroicon-o-document-text')
+                    ->color('success')
+                    ->url(fn($record) => route(
+                        'filament.admin.resources.prescriptions.create',
+                        [
+                            'clinical_record_id' => $record->id,
+                        ]
+                    )),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
