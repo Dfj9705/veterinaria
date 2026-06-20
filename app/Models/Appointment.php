@@ -23,6 +23,7 @@ class Appointment extends Model
 
     protected $casts = [
         'appointment_date' => 'date',
+        'duration_minutes' => 'integer',
     ];
 
     public function customer(): BelongsTo
