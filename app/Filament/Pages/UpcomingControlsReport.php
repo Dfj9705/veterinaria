@@ -139,4 +139,14 @@ class UpcomingControlsReport extends Page implements Forms\Contracts\HasForms
         return Carbon::today()
             ->diffInDays(Carbon::parse($date), false);
     }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()?->can('view_reports') ?? false;
+    }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->can('view_reports') ?? false;
+    }
 }

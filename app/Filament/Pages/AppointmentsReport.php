@@ -130,4 +130,14 @@ class AppointmentsReport extends Page implements Forms\Contracts\HasForms
             'veterinarian_id' => $filters['veterinarian_id'] ?? null,
         ]);
     }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()?->can('view_reports') ?? false;
+    }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->can('view_reports') ?? false;
+    }
 }

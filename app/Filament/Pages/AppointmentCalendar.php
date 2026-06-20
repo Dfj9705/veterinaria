@@ -80,4 +80,14 @@ class AppointmentCalendar extends Page
             })
             ->toArray();
     }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()?->can('view_appointments') ?? false;
+    }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->can('view_appointments') ?? false;
+    }
 }

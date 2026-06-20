@@ -46,4 +46,14 @@ class ReportsDashboard extends Page
                 ->count(),
         ];
     }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()?->can('view_reports') ?? false;
+    }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->can('view_reports') ?? false;
+    }
 }

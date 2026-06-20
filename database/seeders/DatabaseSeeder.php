@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             SpeciesSeeder::class,
             BreedSeeder::class,
+            RolePermissionSeeder::class,
+
         ]);
     }
 }

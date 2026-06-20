@@ -88,4 +88,14 @@ class ClinicalRecordReport extends Page implements Forms\Contracts\HasForms
             'pet' => $petId,
         ]);
     }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()?->can('view_reports') ?? false;
+    }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->can('view_reports') ?? false;
+    }
 }
