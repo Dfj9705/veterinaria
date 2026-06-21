@@ -54,6 +54,13 @@ class RolePermissionSeeder extends Seeder
             'create_breeds',
             'update_breeds',
             'delete_breeds',
+            'view_any_quotation',
+            'view_quotation',
+            'create_quotation',
+            'update_quotation',
+            'delete_quotation',
+            'delete_any_quotation',
+            'print_quotation',
         ];
 
         foreach ($permissions as $permission) {
@@ -88,6 +95,13 @@ class RolePermissionSeeder extends Seeder
             'create_appointments',
             'update_appointments',
             'view_reports',
+            'view_any_quotation',
+            'view_quotation',
+            'create_quotation',
+            'update_quotation',
+            'delete_quotation',
+            'delete_any_quotation',
+            'print_quotation',
         ]);
 
         $veterinario->syncPermissions([
@@ -112,6 +126,14 @@ class RolePermissionSeeder extends Seeder
             'update_prescriptions',
 
             'view_reports',
+
+            'view_any_quotation',
+            'view_quotation',
+            'create_quotation',
+            'update_quotation',
+            'delete_quotation',
+            'delete_any_quotation',
+            'print_quotation',
         ]);
 
         $auxiliar->syncPermissions([
