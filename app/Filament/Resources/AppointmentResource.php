@@ -251,7 +251,7 @@ class AppointmentResource extends Resource
                     ->label('Iniciar atención')
                     ->icon('heroicon-o-clipboard-document-check')
                     ->color('success')
-                    ->visible(fn($record) => !ClinicalRecord::where('appointment_id', $record->id)->exists() && $record->status !== 'Cancelada' && $record->status !== 'No asistió')
+                    ->visible(fn($record) => !ClinicalRecord::where('appointment_id', $record->id)->exists() && $record->status !== 'Cancelada' && $record->status !== 'No asistió' && \Illuminate\Support\Facades\Auth::user()->hasRole('Veterinario'))
                     ->url(fn($record) => route('filament.admin.resources.clinical-records.create', [
                         'appointment_id' => $record->id,
                         'pet_id' => $record->pet_id,
