@@ -2,7 +2,7 @@
 
 use Spatie\LaravelSettings\Migrations\SettingsMigration;
 
-class SitesSettings extends SettingsMigration
+class OldSitesSettings extends SettingsMigration
 {
     public function up(): void
     {
