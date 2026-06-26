@@ -176,4 +176,9 @@ class CustomerResource extends Resource
     {
         return auth()->user()?->can('delete_customers') ?? false;
     }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 }
