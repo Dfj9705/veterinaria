@@ -60,65 +60,65 @@
 
     <div class="mt-6">
         <x-filament::section>
-
-            <table class="w-full text-sm">
-                <thead>
-                    <tr class="border-b">
-                        <th class="p-2 text-left">Fecha</th>
-                        <th class="p-2 text-left">Estado</th>
-                        <th class="p-2 text-left">Mascota</th>
-                        <th class="p-2 text-left">Propietario</th>
-                        <th class="p-2 text-left">Teléfono</th>
-                        <th class="p-2 text-left">Veterinario</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @foreach($this->getRecords() as $record)
-
-                        @php
-                            $days = $this->daysRemaining($record->next_control_date);
-                        @endphp
-
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
                         <tr class="border-b">
-
-                            <td class="p-2">
-                                {{ \Carbon\Carbon::parse($record->next_control_date)->format('d/m/Y') }}
-                            </td>
-
-                            <td class="p-2">
-                                @if($days < 0)
-                                    Vencido {{ abs($days) }} días
-                                @elseif($days === 0)
-                                    Hoy
-                                @else
-                                    {{ $days }} días
-                                @endif
-                            </td>
-
-                            <td class="p-2">
-                                {{ $record->pet?->name }}
-                            </td>
-
-                            <td class="p-2">
-                                {{ $record->pet?->customer?->name }}
-                            </td>
-
-                            <td class="p-2">
-                                {{ $record->pet?->customer?->phone }}
-                            </td>
-
-                            <td class="p-2">
-                                {{ $record->veterinarian?->name }}
-                            </td>
-
+                            <th class="p-2 text-left">Fecha</th>
+                            <th class="p-2 text-left">Estado</th>
+                            <th class="p-2 text-left">Mascota</th>
+                            <th class="p-2 text-left">Propietario</th>
+                            <th class="p-2 text-left">Teléfono</th>
+                            <th class="p-2 text-left">Veterinario</th>
                         </tr>
+                    </thead>
 
-                    @endforeach
-                </tbody>
+                    <tbody>
+                        @foreach($this->getRecords() as $record)
 
-            </table>
+                            @php
+                                $days = $this->daysRemaining($record->next_control_date);
+                            @endphp
 
+                            <tr class="border-b">
+
+                                <td class="p-2">
+                                    {{ \Carbon\Carbon::parse($record->next_control_date)->format('d/m/Y') }}
+                                </td>
+
+                                <td class="p-2">
+                                    @if($days < 0)
+                                        Vencido {{ abs($days) }} días
+                                    @elseif($days === 0)
+                                        Hoy
+                                    @else
+                                        {{ $days }} días
+                                    @endif
+                                </td>
+
+                                <td class="p-2">
+                                    {{ $record->pet?->name }}
+                                </td>
+
+                                <td class="p-2">
+                                    {{ $record->pet?->customer?->name }}
+                                </td>
+
+                                <td class="p-2">
+                                    {{ $record->pet?->customer?->phone }}
+                                </td>
+
+                                <td class="p-2">
+                                    {{ $record->veterinarian?->name }}
+                                </td>
+
+                            </tr>
+
+                        @endforeach
+                    </tbody>
+
+                </table>
+            </div>
         </x-filament::section>
     </div>
 
