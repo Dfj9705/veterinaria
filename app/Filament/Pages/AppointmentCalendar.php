@@ -34,6 +34,10 @@ class AppointmentCalendar extends Page
             ->whereHas('roles', function ($query) {
                 $query->whereIn('name', ['Veterinario', 'Groomer', 'Administrador']);
             })
+            ->when(
+                auth()->user()->hasAnyRole(['Veterinario', 'Groomer']),
+                fn($query) => $query->where('id', auth()->id())
+            )
             ->pluck('name', 'id')
             ->toArray();
 
