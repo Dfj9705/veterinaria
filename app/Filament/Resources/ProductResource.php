@@ -185,26 +185,31 @@ class ProductResource extends Resource
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
 
-            ])->filters([
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make()
+                    ->label('Editar'),
+            ])
+            ->filters([
 
-                    Tables\Filters\SelectFilter::make('inventory_category_id')
-                        ->relationship('category', 'name'),
+                Tables\Filters\SelectFilter::make('inventory_category_id')
+                    ->relationship('category', 'name'),
 
-                    Tables\Filters\SelectFilter::make('type')
-                        ->options([
-                            'Medicamento' => 'Medicamento',
-                            'Vacuna' => 'Vacuna',
-                            'Insumo' => 'Insumo',
-                            'Alimento' => 'Alimento',
-                            'Accesorio' => 'Accesorio',
-                            'Material quirúrgico' => 'Material quirúrgico',
-                            'Laboratorio' => 'Laboratorio',
-                            'Otro' => 'Otro',
-                        ]),
+                Tables\Filters\SelectFilter::make('type')
+                    ->options([
+                        'Medicamento' => 'Medicamento',
+                        'Vacuna' => 'Vacuna',
+                        'Insumo' => 'Insumo',
+                        'Alimento' => 'Alimento',
+                        'Accesorio' => 'Accesorio',
+                        'Material quirúrgico' => 'Material quirúrgico',
+                        'Laboratorio' => 'Laboratorio',
+                        'Otro' => 'Otro',
+                    ]),
 
-                    Tables\Filters\TernaryFilter::make('is_active'),
+                Tables\Filters\TernaryFilter::make('is_active'),
 
-                ]);
+            ]);
     }
 
     public static function getRelations(): array
