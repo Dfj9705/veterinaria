@@ -262,7 +262,7 @@ class AppointmentResource extends Resource
                     ->label('Finalizar')
                     ->icon('heroicon-o-clipboard-document-check')
                     ->color('success')
-                    ->visible(fn($record) => $record->status !== 'Cancelada' && $record->status !== 'No asistió' && $record->status !== 'Finalizada' && (\Illuminate\Support\Facades\Auth::user()->hasRole('Groomer') || \Illuminate\Support\Facades\Auth::user()->hasRole('Administrador')))
+                    ->visible(fn($record) => $record->status !== 'Cancelada' && $record->status !== 'No asistió' && $record->status !== 'Finalizada' && (\Illuminate\Support\Facades\Auth::user()->hasRole('Groomer') || \Illuminate\Support\Facades\Auth::user()->hasRole('Administrador')) && ($record->assigned_user_id == \Illuminate\Support\Facades\Auth::id() || \Illuminate\Support\Facades\Auth::user()->hasRole('Administrador')))
                     ->action(function ($record) {
                         $record->status = 'Finalizada';
                         $record->save();
