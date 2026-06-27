@@ -88,7 +88,6 @@ class CreateInventoryMovement extends CreateRecord
             ->title('Movimiento de Inventario')
             ->body('Se ha realizado un movimiento de inventario de ' . $product->name . ' de ' . $quantity . ' unidades.')
             ->warning()
-            ->database
             ->sendToDatabase($users);
 
         if ($stockAfter <= $product->minimum_stock) {
