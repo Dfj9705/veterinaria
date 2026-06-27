@@ -31,6 +31,9 @@ class AppointmentCalendar extends Page
 
         $this->veterinarians = User::query()
             ->orderBy('name')
+            ->whereHas('roles', function ($query) {
+                $query->whereIn('name', ['Veterinario', 'Groomer', 'Administrador']);
+            })
             ->pluck('name', 'id')
             ->toArray();
 

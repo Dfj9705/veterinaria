@@ -7,7 +7,7 @@
 
             <select id="veterinarian-filter"
                 class="mt-2 block w-full max-w-sm rounded-lg border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white">
-                <option value="">Todos los veterinarios</option>
+                <option value="">Todos los responsables</option>
 
                 @foreach ($veterinarians as $id => $name)
                     <option value="{{ $id }}">{{ $name }}</option>
