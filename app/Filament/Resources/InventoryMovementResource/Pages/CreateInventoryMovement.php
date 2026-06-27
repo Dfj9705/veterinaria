@@ -4,6 +4,7 @@ namespace App\Filament\Resources\InventoryMovementResource\Pages;
 
 use App\Filament\Resources\InventoryMovementResource;
 use App\Models\ProductBatch;
+use App\Models\User;
 use App\Services\Inventory\InventoryService;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
@@ -79,6 +80,23 @@ class CreateInventoryMovement extends CreateRecord
                 ->danger()
                 ->send();
             return $data;
+        }
+
+        $users = User::role(['Administrador', 'Veterinario'])->get();
+
+        Notification::make()
+            ->title('Movimiento de Inventario')
+            ->body('Se ha realizado un movimiento de inventario de ' . $product->name . ' de ' . $quantity . ' unidades.')
+            ->warning()
+            ->database
+            ->sendToDatabase($users);
+
+        if ($stockAfter <= $product->minimum_stock) {
+            Notification::make()
+                ->title('Stock Bajo')
+                ->body('El stock de ' . $product->name . ' está por debajo o igual al mínimo.')
+                ->warning()
+                ->sendToDatabase($users);
         }
 
         $data['stock_before'] = $stockBefore;

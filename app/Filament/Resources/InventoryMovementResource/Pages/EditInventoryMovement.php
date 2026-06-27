@@ -5,6 +5,8 @@ namespace App\Filament\Resources\InventoryMovementResource\Pages;
 use App\Filament\Resources\InventoryMovementResource;
 use App\Models\Product;
 use App\Models\ProductBatch;
+use App\Models\User;
+use App\Services\Inventory\InventoryService;
 use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
@@ -87,10 +89,26 @@ class EditInventoryMovement extends EditRecord
             return $data;
         }
 
+        if ($stockAfter <= $product->minimum_stock) {
+            $users = User::role(['Administrador', 'Veterinario'])->get();
+
+            Notification::make()
+                ->title('Stock Bajo')
+                ->body('El stock de ' . $product->name . ' está por debajo o igual al mínimo.')
+                ->warning()
+                ->sendToDatabase($users);
+        }
+
         $data['stock_before'] = $stockBefore;
         $data['stock_after'] = $stockAfter;
         $data['user_id'] = auth()->id();
 
         return $data;
+    }
+
+    protected function afterSave(): void
+    {
+        app(InventoryService::class)
+            ->applyMovement($this->record);
     }
 }
