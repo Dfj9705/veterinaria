@@ -5,6 +5,7 @@ namespace App\Filament\Resources\AppointmentResource\Pages;
 use App\Filament\Resources\AppointmentResource;
 use App\Models\Appointment;
 use Carbon\Carbon;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Validation\ValidationException;
 
@@ -45,5 +46,16 @@ class EditAppointment extends EditRecord
                 'data.appointment_time' => 'El veterinario ya tiene una cita asignada en ese horario.',
             ]);
         }
+    }
+
+    protected function afterSave(): void
+    {
+        $users = $this->record->veterinarian;
+
+        Notification::make()
+            ->title('Cita Modificada')
+            ->body('Se ha modificado una cita con ' . $this->record->customer->name . ' para el ' . $this->record->appointment_date->toDateString() . ' a las ' . $this->record->appointment_time . ' para el paciente ' . $this->record->pet->name)
+            ->warning()
+            ->sendToDatabase($users);
     }
 }

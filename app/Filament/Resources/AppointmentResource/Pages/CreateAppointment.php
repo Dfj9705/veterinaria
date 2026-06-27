@@ -5,8 +5,10 @@ namespace App\Filament\Resources\AppointmentResource\Pages;
 use App\Filament\Resources\AppointmentResource;
 use App\Models\Appointment;
 use Carbon\Carbon;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Validation\ValidationException;
+
 
 class CreateAppointment extends CreateRecord
 {
@@ -44,5 +46,16 @@ class CreateAppointment extends CreateRecord
                 'data.appointment_time' => 'El veterinario ya tiene una cita asignada en ese horario.',
             ]);
         }
+    }
+
+    protected function afterCreate(): void
+    {
+        $users = $this->record->veterinarian;
+
+        Notification::make()
+            ->title('Cita Programada')
+            ->body('Se ha programado una cita con ' . $this->record->customer->name . ' para el ' . $this->record->appointment_date->toDateString() . ' a las ' . $this->record->appointment_time . ' para el paciente ' . $this->record->pet->name)
+            ->warning()
+            ->sendToDatabase($users);
     }
 }
