@@ -62,6 +62,8 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->databaseNotifications()
+            ->sidebarCollapsibleOnDesktop()
+            ->profile()
             ->databaseNotificationsPolling('30s')
             ->plugin(FilamentPWAPlugin::make());
     }
