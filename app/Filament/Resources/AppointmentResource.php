@@ -86,11 +86,12 @@ class AppointmentResource extends Resource
                                 }
                             }),
 
-                        Forms\Components\Select::make('veterinarian_id')
-                            ->label('Veterinario')
+                        Forms\Components\Select::make('assigned_user_id')
+                            ->label('Responsable')
                             ->options(function () {
                                 return User::whereHas('roles', function ($query) {
                                     $query->where('name', 'Veterinario')
+                                        ->orWhere('name', 'Groomer')
                                         ->orWhere('name', 'Administrador');
                                 })
                                     ->orderBy('name')
@@ -178,8 +179,8 @@ class AppointmentResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('veterinarian.name')
-                    ->label('Veterinario')
+                Tables\Columns\TextColumn::make('assignedUser.name')
+                    ->label('Responsable')
                     ->searchable()
                     ->sortable(),
 
@@ -217,9 +218,9 @@ class AppointmentResource extends Resource
                         'No asistió' => 'No asistió',
                     ]),
 
-                Tables\Filters\SelectFilter::make('veterinarian_id')
-                    ->label('Veterinario')
-                    ->relationship('veterinarian', 'name'),
+                Tables\Filters\SelectFilter::make('assigned_user_id')
+                    ->label('Responsable')
+                    ->relationship('assignedUser', 'name'),
 
                 Tables\Filters\Filter::make('appointment_date')
                     ->label('Fecha')
@@ -255,8 +256,17 @@ class AppointmentResource extends Resource
                     ->url(fn($record) => route('filament.admin.resources.clinical-records.create', [
                         'appointment_id' => $record->id,
                         'pet_id' => $record->pet_id,
-                        'veterinarian_id' => $record->veterinarian_id,
+                        'assigned_user_id' => $record->assigned_user_id,
                     ])),
+                Tables\Actions\Action::make('finalizar')
+                    ->label('Finalizar')
+                    ->icon('heroicon-o-clipboard-document-check')
+                    ->color('success')
+                    ->visible(fn($record) => $record->status !== 'Cancelada' && $record->status !== 'No asistió' && $record->status !== 'Finalizada' && (\Illuminate\Support\Facades\Auth::user()->hasRole('Groomer') || \Illuminate\Support\Facades\Auth::user()->hasRole('Administrador')))
+                    ->action(function ($record) {
+                        $record->status = 'Finalizada';
+                        $record->save();
+                    }),
 
             ])
             ->bulkActions([

@@ -12,7 +12,7 @@ class Appointment extends Model
         'customer_id',
         'pet_id',
         'service_id',
-        'veterinarian_id',
+        'assigned_user_id',
         'appointment_date',
         'appointment_time',
         'duration_minutes',
@@ -41,9 +41,9 @@ class Appointment extends Model
         return $this->belongsTo(Service::class);
     }
 
-    public function veterinarian(): BelongsTo
+    public function assignedUser()
     {
-        return $this->belongsTo(User::class, 'veterinarian_id');
+        return $this->belongsTo(User::class, 'assigned_user_id');
     }
 
     public function clinicalRecord(): HasOne

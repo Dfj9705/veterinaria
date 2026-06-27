@@ -99,7 +99,7 @@
                             {{ $appointment->service?->name }}
                         </td>
                         <td>
-                            {{ $appointment->veterinarian?->name }}
+                            {{ $appointment->assignedUser?->name }}
                         </td>
                         <td class="text-center">
                             {{ $appointment->status }}

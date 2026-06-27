@@ -85,7 +85,7 @@
 
                                 <div>
                                     Veterinario:
-                                    <strong>{{ $record->veterinarian?->name }}</strong>
+                                    <strong>{{ $record->assignedUser?->name }}</strong>
                                 </div>
                             </div>
 

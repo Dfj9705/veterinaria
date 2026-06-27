@@ -172,7 +172,7 @@
                 <div class="record-header">
                     Consulta del {{ $record->created_at?->format('d/m/Y H:i') }}
                     —
-                    Veterinario: {{ $record->veterinarian?->name ?? 'No asignado' }}
+                    Veterinario: {{ $record->assignedUser?->name ?? 'No asignado' }}
                 </div>
 
                 <table>

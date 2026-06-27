@@ -39,7 +39,7 @@ class ClinicalRecord extends Model
         return $this->belongsTo(Appointment::class);
     }
 
-    public function veterinarian(): BelongsTo
+    public function assignedUser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'veterinarian_id');
     }

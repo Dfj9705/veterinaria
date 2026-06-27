@@ -105,7 +105,7 @@
                         <td>{{ $record->pet?->name }}</td>
                         <td>{{ $record->pet?->customer?->name }}</td>
                         <td>{{ $record->pet?->customer?->phone }}</td>
-                        <td>{{ $record->veterinarian?->name }}</td>
+                        <td>{{ $record->assignedUser?->name }}</td>
                         <td>{{ $record->reason }}</td>
                     </tr>
                 @empty

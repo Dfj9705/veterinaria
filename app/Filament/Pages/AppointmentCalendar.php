@@ -35,7 +35,7 @@ class AppointmentCalendar extends Page
             ->toArray();
 
         $this->events = Appointment::query()
-            ->with(['customer', 'pet', 'service', 'veterinarian'])
+            ->with(['customer', 'pet', 'service', 'assignedUser'])
             ->get()
             ->map(function (Appointment $appointment) {
                 $start = $appointment->appointment_date->format('Y-m-d') . 'T' . $appointment->appointment_time;
@@ -69,11 +69,11 @@ class AppointmentCalendar extends Page
                         default => '#6b7280',
                     },
                     'extendedProps' => [
-                        'veterinarian_id' => $appointment->veterinarian_id,
+                        'assigned_user_id' => $appointment->assigned_user_id,
                         'cliente' => $appointment->customer->name,
                         'mascota' => $appointment->pet->name,
                         'servicio' => $appointment->service->name,
-                        'veterinario' => $appointment->veterinarian->name,
+                        'veterinario' => $appointment->assignedUser->name,
                         'estado' => $appointment->status,
                     ],
                 ];

@@ -27,7 +27,7 @@ class CreateAppointment extends CreateRecord
         $end = $start->copy()->addMinutes((int) $data['duration_minutes']);
 
         $hasConflict = Appointment::query()
-            ->where('veterinarian_id', $data['veterinarian_id'])
+            ->where('assigned_user_id', $data['assigned_user_id'])
             ->where('appointment_date', $data['appointment_date'])
             ->whereNotIn('status', ['Cancelada', 'No asistió'])
             ->get()
@@ -50,7 +50,7 @@ class CreateAppointment extends CreateRecord
 
     protected function afterCreate(): void
     {
-        $users = $this->record->veterinarian;
+        $users = $this->record->assignedUser;
 
         Notification::make()
             ->title('Cita Programada')

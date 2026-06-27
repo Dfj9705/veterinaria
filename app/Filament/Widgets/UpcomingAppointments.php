@@ -18,7 +18,7 @@ class UpcomingAppointments extends BaseWidget
         return $table
             ->query(
                 Appointment::query()
-                    ->with(['customer', 'pet', 'service', 'veterinarian'])
+                    ->with(['customer', 'pet', 'service', 'assignedUser'])
                     ->whereDate('appointment_date', '>=', today())
                     ->whereIn('status', [
                         'Programada',
@@ -47,8 +47,8 @@ class UpcomingAppointments extends BaseWidget
                 Tables\Columns\TextColumn::make('service.name')
                     ->label('Servicio'),
 
-                Tables\Columns\TextColumn::make('veterinarian.name')
-                    ->label('Veterinario'),
+                Tables\Columns\TextColumn::make('assignedUser.name')
+                    ->label('Responsable'),
 
                 Tables\Columns\TextColumn::make('status')
                     ->label('Estado')

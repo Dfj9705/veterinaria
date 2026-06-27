@@ -32,7 +32,7 @@ class UpcomingControlsReport extends Page implements Forms\Contracts\HasForms
         $this->form->fill([
             'from' => today()->toDateString(),
             'to' => today()->addDays(30)->toDateString(),
-            'veterinarian_id' => null,
+            'assigned_user_id' => null,
         ]);
     }
 
@@ -50,8 +50,8 @@ class UpcomingControlsReport extends Page implements Forms\Contracts\HasForms
                     ->required()
                     ->live(),
 
-                Forms\Components\Select::make('veterinarian_id')
-                    ->label('Veterinario')
+                Forms\Components\Select::make('assigned_user_id')
+                    ->label('Responsable')
                     ->options(
                         User::query()
                             ->orderBy('name')
@@ -86,9 +86,9 @@ class UpcomingControlsReport extends Page implements Forms\Contracts\HasForms
                 $q->whereDate('next_control_date', '<=', $date)
             )
             ->when(
-                $filters['veterinarian_id'] ?? null,
+                $filters['assigned_user_id'] ?? null,
                 fn($q, $id) =>
-                $q->where('veterinarian_id', $id)
+                $q->where('assigned_user_id', $id)
             )
             ->orderBy('next_control_date')
             ->get()

@@ -86,13 +86,13 @@ class ClinicalRecordResource extends Resource
                             ->default(fn() => request()->get('appointment_id'))
                             ->placeholder('Seleccione primero una mascota'),
 
-                        Forms\Components\Select::make('veterinarian_id')
-                            ->label('Veterinario')
-                            ->relationship('veterinarian', 'name')
+                        Forms\Components\Select::make('assigned_user_id')
+                            ->label('Responsable')
+                            ->relationship('assignedUser', 'name')
                             ->searchable()
                             ->preload()
                             ->required()
-                            ->default(fn() => request()->get('veterinarian_id') ?? auth()->id())
+                            ->default(fn() => request()->get('assigned_user_id') ?? auth()->id())
                         ,
                         Forms\Components\DateTimePicker::make('consultation_date')
                             ->label('Fecha de consulta')
@@ -203,7 +203,7 @@ class ClinicalRecordResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('veterinarian.name')
+                Tables\Columns\TextColumn::make('assignedUser.name')
                     ->label('Veterinario')
                     ->searchable()
                     ->sortable(),
@@ -229,9 +229,9 @@ class ClinicalRecordResource extends Resource
                     ->searchable()
                     ->preload(),
 
-                Tables\Filters\SelectFilter::make('veterinarian_id')
-                    ->label('Veterinario')
-                    ->relationship('veterinarian', 'name')
+                Tables\Filters\SelectFilter::make('assigned_user_id')
+                    ->label('Responsable')
+                    ->relationship('assignedUser', 'name')
                     ->searchable()
                     ->preload(),
 

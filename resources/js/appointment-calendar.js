@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const veterinarianId = this.value;
 
             const filteredEvents = veterinarianId
-                ? allEvents.filter(event => String(event.extendedProps.veterinarian_id) === String(veterinarianId))
+                ? allEvents.filter(event => String(event.extendedProps.assigned_user_id) === String(veterinarianId))
                 : allEvents;
 
             calendar.removeAllEvents();

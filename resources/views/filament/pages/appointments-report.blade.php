@@ -24,7 +24,7 @@
                             <th class="px-3 py-2">Cliente</th>
                             <th class="px-3 py-2">Mascota</th>
                             <th class="px-3 py-2">Servicio</th>
-                            <th class="px-3 py-2">Veterinario</th>
+                            <th class="px-3 py-2">Responsable</th>
                             <th class="px-3 py-2">Estado</th>
                         </tr>
                     </thead>
@@ -47,7 +47,7 @@
                                     {{ $appointment->service?->name }}
                                 </td>
                                 <td class="px-3 py-2">
-                                    {{ $appointment->veterinarian?->name }}
+                                    {{ $appointment->assignedUser?->name }}
                                 </td>
                                 <td class="px-3 py-2">
                                     {{ $appointment->status }}

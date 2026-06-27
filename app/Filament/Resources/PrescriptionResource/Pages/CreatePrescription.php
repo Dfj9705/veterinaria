@@ -33,7 +33,7 @@ class CreatePrescription extends CreateRecord
             'clinical_record_id' => $record->id,
             'pet_id' => $record->pet_id,
             'customer_id' => $record->pet->customer_id,
-            'veterinarian_id' => $record->veterinarian_id,
+            'assigned_user_id' => $record->assigned_user_id,
         ]);
     }
 }

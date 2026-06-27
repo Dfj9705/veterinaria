@@ -26,7 +26,7 @@ class EditAppointment extends EditRecord
         $end = $start->copy()->addMinutes((int) $data['duration_minutes']);
 
         $hasConflict = Appointment::query()
-            ->where('veterinarian_id', $data['veterinarian_id'])
+            ->where('assigned_user_id', $data['assigned_user_id'])
             ->where('appointment_date', $data['appointment_date'])
             ->where('id', '!=', $this->record->id)
             ->whereNotIn('status', ['Cancelada', 'No asistió'])
@@ -50,7 +50,7 @@ class EditAppointment extends EditRecord
 
     protected function afterSave(): void
     {
-        $users = $this->record->veterinarian;
+        $users = $this->record->assignedUser;
 
         Notification::make()
             ->title('Cita Modificada')

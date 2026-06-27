@@ -69,7 +69,7 @@ class ClinicalRecordReport extends Page implements Forms\Contracts\HasForms
                 'species',
                 'breed',
                 'clinicalRecords' => fn($query) => $query->latest(),
-                'clinicalRecords.veterinarian',
+                'clinicalRecords.assignedUser',
                 'clinicalRecords.prescriptions',
                 'clinicalRecords.prescriptions.items'
             ])

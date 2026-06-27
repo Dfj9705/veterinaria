@@ -35,7 +35,7 @@ class AppointmentsReport extends Page implements Forms\Contracts\HasForms
             'to' => now()->toDateString(),
             'status' => null,
             'service_id' => null,
-            'veterinarian_id' => null,
+            'assigned_user_id' => null,
         ]);
     }
 
@@ -75,8 +75,8 @@ class AppointmentsReport extends Page implements Forms\Contracts\HasForms
                     ->native(false)
                     ->live(),
 
-                Forms\Components\Select::make('veterinarian_id')
-                    ->label('Veterinario')
+                Forms\Components\Select::make('assigned_user_id')
+                    ->label('Responsable')
                     ->options(fn() => User::query()->orderBy('name')->pluck('name', 'id'))
                     ->searchable()
                     ->preload()
@@ -96,7 +96,7 @@ class AppointmentsReport extends Page implements Forms\Contracts\HasForms
                 'customer',
                 'pet',
                 'service',
-                'veterinarian',
+                'assignedUser',
             ])
             ->when($filters['from'] ?? null, function (Builder $query, $date) {
                 $query->whereDate('appointment_date', '>=', $date);
@@ -110,8 +110,8 @@ class AppointmentsReport extends Page implements Forms\Contracts\HasForms
             ->when($filters['service_id'] ?? null, function (Builder $query, $serviceId) {
                 $query->where('service_id', $serviceId);
             })
-            ->when($filters['veterinarian_id'] ?? null, function (Builder $query, $veterinarianId) {
-                $query->where('veterinarian_id', $veterinarianId);
+            ->when($filters['assigned_user_id'] ?? null, function (Builder $query, $assignedUserId) {
+                $query->where('assigned_user_id', $assignedUserId);
             })
             ->orderBy('appointment_date')
             ->orderBy('appointment_time')
@@ -127,7 +127,7 @@ class AppointmentsReport extends Page implements Forms\Contracts\HasForms
             'to' => $filters['to'] ?? null,
             'status' => $filters['status'] ?? null,
             'service_id' => $filters['service_id'] ?? null,
-            'veterinarian_id' => $filters['veterinarian_id'] ?? null,
+            'assigned_user_id' => $filters['assigned_user_id'] ?? null,
         ]);
     }
 

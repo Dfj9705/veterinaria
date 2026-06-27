@@ -18,13 +18,16 @@ class RoleSeeder extends Seeder
         Role::firstOrCreate(['name' => 'Recepcion']);
         Role::firstOrCreate(['name' => 'Veterinario']);
         Role::firstOrCreate(['name' => 'Auxiliar']);
+        Role::firstOrCreate(['name' => 'Groomer']);
 
-        $user = User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@veterinaria.test',
-            'password' => bcrypt('Asdf123#'),
-        ]);
+        if (!User::where('name', 'Admin')->exists()) {
+            $user = User::factory()->create([
+                'name' => 'Admin',
+                'email' => 'admin@veterinaria.test',
+                'password' => bcrypt('Asdf123#'),
+            ]);
+            $user->assignRole('Administrador');
+        }
 
-        $user->assignRole('Administrador');
     }
 }

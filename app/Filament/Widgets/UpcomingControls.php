@@ -18,7 +18,7 @@ class UpcomingControls extends BaseWidget
         return $table
             ->query(
                 ClinicalRecord::query()
-                    ->with(['pet.customer', 'veterinarian'])
+                    ->with(['pet.customer', 'assignedUser'])
                     ->whereNotNull('next_control_date')
                     ->whereDate('next_control_date', '>=', today())
                     ->orderBy('next_control_date')
@@ -35,8 +35,8 @@ class UpcomingControls extends BaseWidget
                 Tables\Columns\TextColumn::make('pet.customer.name')
                     ->label('Cliente'),
 
-                Tables\Columns\TextColumn::make('veterinarian.name')
-                    ->label('Veterinario'),
+                Tables\Columns\TextColumn::make('assignedUser.name')
+                    ->label('Responsable'),
 
                 Tables\Columns\TextColumn::make('diagnosis')
                     ->label('Diagnóstico')

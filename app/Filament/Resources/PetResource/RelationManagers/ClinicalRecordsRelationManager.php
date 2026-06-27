@@ -27,7 +27,7 @@ class ClinicalRecordsRelationManager extends RelationManager
                         $petId = $this->getOwnerRecord()->id;
 
                         return Appointment::query()
-                            ->with(['service', 'veterinarian'])
+                            ->with(['service', 'assignedUser'])
                             ->where('pet_id', $petId)
                             ->orderByDesc('appointment_date')
                             ->get()
@@ -37,7 +37,7 @@ class ClinicalRecordsRelationManager extends RelationManager
                                     . ' | '
                                     . ($appointment->service?->name ?? 'Sin servicio')
                                     . ' | '
-                                    . ($appointment->veterinarian?->name ?? 'Sin veterinario')
+                                    . ($appointment->assignedUser?->name ?? 'Sin veterinario')
                                     . ' | '
                                     . $appointment->status,
                             ]);
@@ -47,8 +47,8 @@ class ClinicalRecordsRelationManager extends RelationManager
                     ->placeholder('Seleccione una cita de esta mascota'),
 
                 Forms\Components\Select::make('veterinarian_id')
-                    ->label('Veterinario')
-                    ->relationship('veterinarian', 'name')
+                    ->label('Responsable')
+                    ->relationship('assignedUser', 'name')
                     ->searchable()
                     ->preload()
                     ->default(auth()->id())
@@ -107,7 +107,7 @@ class ClinicalRecordsRelationManager extends RelationManager
                     ->sortable()
                     ->description(fn($record) => $record->appointment?->service?->name ?? 'Atención médica'),
 
-                Tables\Columns\TextColumn::make('veterinarian.name')
+                Tables\Columns\TextColumn::make('assignedUser.name')
                     ->label('Veterinario')
                     ->searchable(),
 

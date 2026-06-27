@@ -19,7 +19,7 @@ class ReportController extends Controller
                 'customer',
                 'pet',
                 'service',
-                'veterinarian',
+                'assignedUser',
             ])
             ->when($request->from, function (Builder $query, $date) {
                 $query->whereDate('appointment_date', '>=', $date);
@@ -33,8 +33,8 @@ class ReportController extends Controller
             ->when($request->service_id, function (Builder $query, $serviceId) {
                 $query->where('service_id', $serviceId);
             })
-            ->when($request->veterinarian_id, function (Builder $query, $veterinarianId) {
-                $query->where('veterinarian_id', $veterinarianId);
+            ->when($request->assigned_user_id, function (Builder $query, $assignedUserId) {
+                $query->where('assigned_user_id', $assignedUserId);
             })
             ->orderBy('appointment_date')
             ->orderBy('appointment_time')
@@ -67,7 +67,7 @@ class ReportController extends Controller
             'species',
             'breed',
             'clinicalRecords' => fn($query) => $query->latest(),
-            'clinicalRecords.veterinarian',
+            'clinicalRecords.assignedUser',
             'clinicalRecords.prescriptions',
             'clinicalRecords.prescriptions.items',
         ]);
@@ -95,7 +95,7 @@ class ReportController extends Controller
         $records = ClinicalRecord::query()
             ->with([
                 'pet.customer',
-                'veterinarian',
+                'assignedUser',
             ])
             ->whereNotNull('next_control_date')
             ->when(
@@ -109,9 +109,9 @@ class ReportController extends Controller
                 $q->whereDate('next_control_date', '<=', $date)
             )
             ->when(
-                $request->veterinarian_id,
+                $request->assigned_user_id,
                 fn($q, $id) =>
-                $q->where('veterinarian_id', $id)
+                $q->where('assigned_user_id', $id)
             )
             ->orderBy('next_control_date')
             ->get()

@@ -170,6 +170,11 @@ class RolePermissionSeeder extends Seeder
             'guard_name' => 'web',
         ]);
 
+        $groomer = Role::firstOrCreate([
+            'name' => 'Groomer',
+            'guard_name' => 'web',
+        ]);
+
         /*
         |--------------------------------------------------------------------------
         | Asignación de permisos
@@ -266,6 +271,29 @@ class RolePermissionSeeder extends Seeder
 
             'view_services',
             'view_appointments',
+            'view_medical_records',
+            'view_prescriptions',
+
+            'view_inventory_categories',
+            'view_units',
+            'view_products',
+
+            'view_inventory_movements',
+            'create_inventory_movements',
+        ]);
+
+        $groomer->syncPermissions([
+            'view_dashboard',
+
+            'view_customers',
+            'view_pets',
+
+            'view_species',
+            'view_breeds',
+
+            'view_services',
+            'view_appointments',
+            'update_appointments',
             'view_medical_records',
             'view_prescriptions',
 

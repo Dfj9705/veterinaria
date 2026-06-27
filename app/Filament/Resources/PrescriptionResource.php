@@ -39,7 +39,7 @@ class PrescriptionResource extends Resource
                         ->label('Historial clínico')
                         ->options(
                             ClinicalRecord::query()
-                                ->with(['pet.customer', 'veterinarian'])
+                                ->with(['pet.customer', 'assignedUser'])
                                 ->latest()
                                 ->get()
                                 ->mapWithKeys(fn($record) => [
@@ -62,7 +62,7 @@ class PrescriptionResource extends Resource
 
                             $set('pet_id', $record->pet_id);
                             $set('customer_id', $record->pet?->customer_id);
-                            $set('veterinarian_id', $record->veterinarian_id);
+                            $set('assigned_user_id', $record->assigned_user_id);
                         }),
 
                     Forms\Components\Select::make('pet_id')
@@ -88,7 +88,7 @@ class PrescriptionResource extends Resource
                         ->required(),
 
                     Forms\Components\Select::make('veterinarian_id')
-                        ->label('Veterinario')
+                        ->label('Responsable')
                         ->options(User::query()->orderBy('name')->pluck('name', 'id'))
                         ->searchable()
                         ->preload()
@@ -150,7 +150,7 @@ class PrescriptionResource extends Resource
                     ->label('Cliente')
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('veterinarian.name')
+                Tables\Columns\TextColumn::make('assi.name')
                     ->label('Veterinario'),
 
                 Tables\Columns\TextColumn::make('created_at')
