@@ -39,6 +39,10 @@ class AppointmentCalendar extends Page
 
         $this->events = Appointment::query()
             ->with(['customer', 'pet', 'service', 'assignedUser'])
+            ->when(
+                auth()->user()->hasRole(['Veterinario', 'Groomer']),
+                fn($query) => $query->where('assigned_user_id', auth()->id())
+            )
             ->get()
             ->map(function (Appointment $appointment) {
                 $start = $appointment->appointment_date->format('Y-m-d') . 'T' . $appointment->appointment_time;

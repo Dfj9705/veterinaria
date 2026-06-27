@@ -315,4 +315,15 @@ class AppointmentResource extends Resource
     {
         return auth()->user()?->can('delete_appointments') ?? false;
     }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        if (auth()->user()->hasRole('Veterinario') || auth()->user()->hasRole('Groomer')) {
+            $query->where('assigned_user_id', auth()->id());
+        }
+
+        return $query;
+    }
 }
