@@ -86,7 +86,7 @@ class ClinicalRecordResource extends Resource
                             ->default(fn() => request()->get('appointment_id'))
                             ->placeholder('Seleccione primero una mascota'),
 
-                        Forms\Components\Select::make('assigned_user_id')
+                        Forms\Components\Select::make('veterinarian_id')
                             ->label('Responsable')
                             ->relationship('assignedUser', 'name')
                             ->searchable()
