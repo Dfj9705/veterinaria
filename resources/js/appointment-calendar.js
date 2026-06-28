@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
             interactionPlugin,
         ],
 
-        initialView: 'dayGrid',
+        initialView: 'timeGridWeek',
         locale: 'es',
         selectable: true,
         allDaySlot: false,
